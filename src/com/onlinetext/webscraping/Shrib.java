@@ -2,13 +2,11 @@ package com.onlinetext.webscraping;
 
 import com.onlinetext.core.ScrappingSite;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -21,12 +19,24 @@ public class Shrib implements ScrappingSite {
         this.siteResourceName = siteResourceName;
         siteUrl = new URL(baseUrlString);
         httpURLConnection = (HttpURLConnection) siteUrl.openConnection();
-        this.httpURLConnection.setRequestMethod("POST");
     }
     @Override
     public String getText() throws IOException {
         System.out.println(this.siteUrl);
-
+        this.httpURLConnection.setRequestMethod("POST");
+        this.httpURLConnection.setDoOutput(true);
+        this.httpURLConnection.setInstanceFollowRedirects(false);
+        this.httpURLConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+        this.httpURLConnection.setRequestProperty("charset", "utf-8");
+        String urlParams = "action=init&l=&qll=none&note=" + this.siteResourceName;
+        System.out.println(urlParams);
+        byte[] postData = urlParams.getBytes( StandardCharsets.UTF_8 );
+        int postDataLength = postData.length;
+        this.httpURLConnection.setRequestProperty( "Content-Length", Integer.toString( postDataLength ));
+        try( DataOutputStream wr = new DataOutputStream( this.httpURLConnection.getOutputStream())) {
+            wr.write(postData);
+            wr.flush();
+        }
         InputStream is = this.httpURLConnection.getInputStream();
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
