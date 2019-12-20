@@ -1,37 +1,38 @@
 package com.onlinetext.client;
+import com.onlinetext.core.Target;
+
 import java.awt.Toolkit;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
-class Copy
+
+public class ClipboardTarget implements Target
 {
-	public void setTextToClipboard(String text){
-		Toolkit.getDefaultToolkit().getSystemClipboard()
-			.setContents(new StringSelection(text), null);
+	@Override
+	public boolean putText(String text){
+		try{
+			Toolkit.getDefaultToolkit().getSystemClipboard()
+					.setContents(new StringSelection(text), null);
+			return true;
+		}catch (Exception e){
+			System.out.println(e.getMessage());
+			return false;
+		}
 	}
-	public String getTextFromClipboard(){
-		try
-		{
+	@Override
+	public String getText(){
+		try {
 			return (String)Toolkit.getDefaultToolkit()
             .getSystemClipboard().getData(DataFlavor.stringFlavor);
 		}
-		catch (UnsupportedFlavorException e)
-		{
-			System.out.println(e);
+		catch (UnsupportedFlavorException | IOException e) {
+			return e.getMessage();
 		}
-		catch(IOException e){
-			System.out.println(e);
-			
-		}
-		return null;
+	}
 
-		
+	@Override
+	public boolean appendText(String text) {
+		return false;
 	}
-	public static void main(String args[]){
-		Copy c = new Copy();
-		c.setTextToClipboard("hello bc jo padh rha hau");
-		System.out.println(c.getTextFromClipboard());
-	}
-	
 }

@@ -7,11 +7,11 @@ public class Main {
     public static void main(String[] args) {
         /**
          * routing
-         * webscrapping
+         * web-scrapping
          * file operation
          */
         if(args.length < 2){
-            System.exit(0);
+             System.exit(0);
         }
         System.out.println(Route.call(args));
     }

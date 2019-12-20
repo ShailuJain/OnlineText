@@ -1,17 +1,17 @@
 package com.onlinetext.core;
 
-public class Argument {
-    private String argument;
+public class ArgumentType {
+    private String argumentType;
 
-    public String getArgument() {
-        return argument;
+    public String getArgumentType() {
+        return argumentType;
     }
 
-    public void setArgument(String argument) {
-        this.argument = argument;
+    public void setArgumentType(String argumentType) {
+        this.argumentType = argumentType;
     }
 
-    public Argument(String argument) {
-        this.argument = argument;
+    public ArgumentType(String argumentType) {
+        this.argumentType = argumentType;
     }
 }

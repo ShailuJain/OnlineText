@@ -2,8 +2,8 @@ package com.onlinetext.core;
 
 import java.io.IOException;
 
-public interface ScrappingSite {
+public interface Target {
     public String getText() throws IOException;
-    public int putText(String text);
-    public int appendText(String text);
+    public boolean putText(String text);
+    public boolean appendText(String text);
 }

@@ -1,16 +1,13 @@
 package com.onlinetext.webscraping;
 
-import com.onlinetext.core.ScrappingSite;
+import com.onlinetext.core.Target;
 
 import java.io.*;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-public class Shrib implements ScrappingSite {
+public class Shrib implements Target {
     public String baseUrlString = "https://shrib.com/zuex/api.php";
     private String siteResourceName;
     private URL siteUrl;
@@ -57,12 +54,12 @@ public class Shrib implements ScrappingSite {
     }
 
     @Override
-    public int putText(String text) {
-        return 0;
+    public boolean putText(String text) {
+        return false;
     }
 
     @Override
-    public int appendText(String text) {
-        return 0;
+    public boolean appendText(String text) {
+        return false;
     }
 }

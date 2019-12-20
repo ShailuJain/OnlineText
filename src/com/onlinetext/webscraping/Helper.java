@@ -1,13 +1,13 @@
 package com.onlinetext.webscraping;
 
-import com.onlinetext.core.ScrappingSite;
+import com.onlinetext.core.Target;
 
 import java.io.IOException;
 
 public class Helper {
     public static String get(String siteResourceName){
         try {
-            ScrappingSite site = new Shrib(siteResourceName);
+            Target site = new Shrib(siteResourceName);
             return site.getText();
         } catch (IOException e) {
             e.printStackTrace();

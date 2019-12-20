@@ -2,38 +2,66 @@ package com.onlinetext.core;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Set;
+import java.util.List;
 
 import static com.onlinetext.core.Constants.*;
+import static com.onlinetext.core.Constants.STRING;
 
-public class Utils {
-    public static final HashMap<String, Command> commands = new HashMap<>();
+public class CoreHelper {
+    static final List<Command> AVAILABLE_COMMANDS = new ArrayList<>();
+    static final List<Option> AVAILABLE_OPTIONS = new ArrayList();
+    static final List<ArgumentType> AVAILABLE_ARGUMENT_TYPES = new ArrayList<>();
+    static final ArgumentType STRING_ARGUMENT_TYPE = new ArgumentType(STRING);
+    static final ArgumentType FILE_NAME_ARGUMENT_TYPE = new ArgumentType(FILE_NAME);
+    static final Option CLIPBOARD_OPTION = new ClipboardOption();
     static {
         /**
-         * Adding available commands
+         * Adding AVAILABLE_COMMANDS
          */
-        commands.put(GET, new GetCommand());
-        commands.put(PUT, new PutCommand());
-        commands.put(APPEND, new AppendCommand());
+        AVAILABLE_COMMANDS.add(new GetCommand());
+        AVAILABLE_COMMANDS.add(new PutCommand());
+        AVAILABLE_COMMANDS.add(new AppendCommand());
 
-
+        /**
+         * Adding AVAILABLE_OPTIONS
+         */
+        AVAILABLE_OPTIONS.add(new ClipboardOption());
     }
 
-    public static boolean isCommand(String command){
-        for (String key : commands.keySet()) {
-            if(commands.get(key).inAliases(command)){
-                return true;
+    public static Command getCommand(String arg) {
+        for (Command command : AVAILABLE_COMMANDS) {
+            if(command.inAliases(arg)){
+                return command;
             }
         }
-        return false;
+        return null;
     }
 
-    public static String getKeyCommand(String command) {
-        for (String key : commands.keySet()) {
-            if(commands.get(key).inAliases(command)){
-                return key;
+    public static Command getCommand(int command) {
+        switch (command){
+            case GET:
+                return AVAILABLE_COMMANDS.get(0);
+            case PUT:
+                return AVAILABLE_COMMANDS.get(1);
+            case APPEND:
+                return AVAILABLE_COMMANDS.get(2);
+            default:
+                return null;
+        }
+    }
+
+    public static boolean isOption(String arg){
+        if(arg == null || "".equals(arg))
+            return false;
+        return arg.startsWith("-");
+    }
+
+    public static Option getOption(String arg) {
+        for (Option option : AVAILABLE_OPTIONS) {
+            if(option.inAliases(arg)){
+                return option;
             }
         }
-        return "";
+        return null;
     }
 }

@@ -1,9 +1,25 @@
 package com.onlinetext.client;
+import com.onlinetext.core.Target;
+
 import java.io.*;
 
-public class ReadWrite {
+public class FileTarget implements Target {
+    private String filename;
 
-    public String readFile(String filename) {
+    public FileTarget(String filename) {
+        this.filename = filename;
+    }
+
+//    public static void main(String args[]) {
+//        FileTarget rw = new FileTarget();
+////        rw.appendToFile("sanjay.txt","hello there");
+//          rw.writeToFile("sanjay.txt","abcd");
+//          rw.appendToFile("sanjay.txt"," ABCD");
+//          System.out.println(rw.readFile("sanjay.txt"));
+//    }
+
+    @Override
+    public String getText() throws IOException {
         String contents = "", temp;
         try {
             File file = new File(filename);
@@ -13,50 +29,37 @@ public class ReadWrite {
                 contents = temp;
                 temp = reader.readLine();
             }
-
-        } catch (IOException io) {
-            io.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
+            return contents;
+        } catch (Exception io) {
+            return io.getMessage();
         }
-        return contents;
     }
 
-    public void writeToFile(String filename, String contents) {
+    @Override
+    public boolean putText(String text) {
         try {
             File file = new File(filename);
             BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-            writer.write(contents);
+            writer.write(text);
             writer.close();
-
-        } catch (IOException io) {
-            io.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
+            return true;
+        } catch (Exception io) {
+            System.out.println(io.getMessage());
+            return false;
         }
     }
 
-    public void appendToFile(String filename, String contents){
+    @Override
+    public boolean appendText(String text) {
         try{
             File file = new File(filename);
             BufferedWriter writer = new BufferedWriter(new FileWriter(file,true));
-
-            writer.write(contents);
+            writer.write(text);
             writer.close();
+            return true;
+        } catch(Exception io){
+            System.out.println(io.getMessage());
+            return false;
         }
-        catch(IOException io){
-            io.printStackTrace();
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    public static void main(String args[]) {
-        ReadWrite rw = new ReadWrite();
-//        rw.appendToFile("sanjay.txt","hello there");
-          rw.writeToFile("sanjay.txt","abcd");
-          rw.appendToFile("sanjay.txt"," ABCD");
-          System.out.println(rw.readFile("sanjay.txt"));
     }
 }
