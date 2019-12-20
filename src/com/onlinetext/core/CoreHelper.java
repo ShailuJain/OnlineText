@@ -1,5 +1,6 @@
 package com.onlinetext.core;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -64,4 +65,17 @@ public class CoreHelper {
         }
         return null;
     }
+    static String exec(Command command, Target source, Target destination){
+        if(command.isValid()){
+            try {
+                String onlineText = source.getText();
+                if(destination.putText(onlineText)){
+                    return "Copied text from " + source.getDescription() + "\nSuccessfully saved the text to " + destination.getDescription();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return "Not a valid command";
+    } 
 }

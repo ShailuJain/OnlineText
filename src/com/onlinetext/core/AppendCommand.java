@@ -3,21 +3,16 @@ package com.onlinetext.core;
 import com.onlinetext.client.ClipboardTarget;
 import com.onlinetext.client.FileTarget;
 import com.onlinetext.webscraping.Shrib;
-
-import java.io.IOException;
-import java.util.ArrayList;
-
 import static com.onlinetext.core.Constants.*;
-import static com.onlinetext.core.Constants.GET_ALIAS_2;
 
 public class AppendCommand extends Command {
     private Target source;
     private Target destination;
 
     public AppendCommand() {
-        super(GET);
-        super.addAlias(GET_ALIAS_1);
-        super.addAlias(GET_ALIAS_2);
+        super(APPEND);
+        super.addAlias(APPEND_ALIAS_1);
+        super.addAlias(APPEND_ALIAS_2);
         super.addRequiredArgumentType(CoreHelper.STRING_ARGUMENT_TYPE);
         super.addRequiredArgumentType(CoreHelper.FILE_NAME_ARGUMENT_TYPE);
         super.addAvailableOption(CoreHelper.CLIPBOARD_OPTION);
@@ -42,7 +37,7 @@ public class AppendCommand extends Command {
     @Override
     public void processOption(Option option) {
         if(option.getOption() == CLIPBOARD){
-            setDestination(new ClipboardTarget());
+            setSource(new ClipboardTarget());
             this.removeRequiredArgumentType(CoreHelper.FILE_NAME_ARGUMENT_TYPE);
         }
     }
@@ -60,27 +55,20 @@ public class AppendCommand extends Command {
 
     @Override
     protected void argumentAdded(ArgumentType argumentType, String argument) {
-        try {
-            switch (argumentType.getArgumentType()){
-                case STRING:
-                    setSource(new Shrib(argument));
-                    break;
-                case FILE_NAME:
-                    setDestination(new FileTarget(argument));
-                    break;
-                default:
-                    System.out.println("Default argument added");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        switch (argumentType.getArgumentType()){
+            case STRING:
+                setDestination(new Shrib(argument));
+                break;
+            case FILE_NAME:
+                setSource(new FileTarget(argument));
+                break;
+            default:
+                System.out.println("Default argument added");
         }
     }
 
     @Override
     public String execute() {
-        if(isValid()){
-
-        }
-        return "Not a valid command";
+        return CoreHelper.exec(this, this.source, this.destination);
     }
 }

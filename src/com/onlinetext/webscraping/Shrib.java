@@ -3,11 +3,11 @@ package com.onlinetext.webscraping;
 import com.onlinetext.core.Target;
 import org.apache.commons.text.StringEscapeUtils;
 
+import javax.net.ssl.HttpsURLConnection;
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
+import java.net.*;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -49,17 +49,52 @@ public class Shrib implements Target {
 
     @Override
     public boolean putText(String text) throws IOException {
+        // Instantiate CookieManager;
+        // make sure to set CookiePolicy
+//        CookieManager manager = new CookieManager();
+//        manager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
+//        CookieHandler.setDefault(manager);
+        // your first request that does the authentication
+        URL authUrl = new URL("https://shrib.com/");
+        HttpURLConnection authCon = (HttpURLConnection) authUrl.openConnection();
+        authCon.setInstanceFollowRedirects(false);
+        authCon.connect();
+
+// temporary to build request cookie header
+        StringBuilder sb = new StringBuilder();
+
+// find the cookies in the response header from the first request
+        List<String> cookies = authCon.getHeaderFields().get("Set-Cookie");
+        if (cookies != null) {
+            for (String cookie : cookies) {
+                if (sb.length() > 0) {
+                    sb.append("; ");
+                }
+
+                // only want the first part of the cookie header that has the value
+                String value = cookie.split(";")[0];
+                sb.append(value);
+            }
+        }
+
+// build request cookie header to send on all subsequent requests
+        String cookieHeader = sb.toString();
+        System.out.println(cookieHeader);
+
         String baseUrlString = "https://shrib.com/zuex/api.php";
+//        String baseUrlString = "https://alt.shrib.com/user";
         siteUrl = new URL(baseUrlString);
         httpURLConnection = (HttpURLConnection) siteUrl.openConnection();
+        httpURLConnection.setInstanceFollowRedirects(false);
         this.httpURLConnection.setRequestMethod("POST");
         this.httpURLConnection.setDoOutput(true);
-        this.httpURLConnection.setInstanceFollowRedirects(false);
         this.httpURLConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
         this.httpURLConnection.setRequestProperty("charset", "utf-8");
+        this.httpURLConnection.setRequestProperty("cookie","guetsli=MKV1tltVLou69bZRb31jrC2V4PL4aXwJTZL7XMqr;");
+
         String urlParams = null;
         try {
-            urlParams = "note="+this.siteResourceName+"&ssc=1&text="+ URLEncoder.encode(text, "utf-8");
+            urlParams = "note="+this.siteResourceName+"&ssc=1&text="+ URLEncoder.encode(text, "UTF-8");
         } catch (UnsupportedEncodingException e) {
             System.out.println(e.getMessage());
             return false;
@@ -68,7 +103,8 @@ public class Shrib implements Target {
         System.out.println(urlParams);
         byte[] postData = urlParams.getBytes( StandardCharsets.UTF_8 );
         int postDataLength = postData.length;
-        this.httpURLConnection.setRequestProperty( "Content-Length", Integer.toString( postDataLength ));
+        this.httpURLConnection.setRequestProperty("Content-Length", Integer.toString( postDataLength ));
+        this.httpURLConnection.connect();
         try( DataOutputStream wr = new DataOutputStream( this.httpURLConnection.getOutputStream())) {
             wr.write(postData);
             wr.flush();

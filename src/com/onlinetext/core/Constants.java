@@ -11,9 +11,9 @@ public interface Constants {
     /**
      * Alias constant
      */
-    public static final String GET_ALIAS_1 = "get";
+    public static final String GET_ALIAS_1 = "read";
     public static final String GET_ALIAS_2 = "r";
-    public static final String PUT_ALIAS_1 = "put";
+    public static final String PUT_ALIAS_1 = "write";
     public static final String PUT_ALIAS_2 = "w";
     public static final String APPEND_ALIAS_1 = "append";
     public static final String APPEND_ALIAS_2 = "a";

@@ -57,34 +57,20 @@ public class GetCommand extends Command {
 
     @Override
     protected void argumentAdded(ArgumentType argumentType, String argument) {
-        try {
-            switch (argumentType.getArgumentType()){
-                case STRING:
-                    setSource(new Shrib(argument));
-                    break;
-                case FILE_NAME:
-                    setDestination(new FileTarget(argument));
-                    break;
-                default:
-                    System.out.println("Default argument added");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        switch (argumentType.getArgumentType()){
+            case STRING:
+                setSource(new Shrib(argument));
+                break;
+            case FILE_NAME:
+                setDestination(new FileTarget(argument));
+                break;
+            default:
+                System.out.println("Default argument added");
         }
     }
 
     @Override
     public String execute() {
-        if(isValid()){
-            try {
-                String onlineText = source.getText();
-                if(destination.putText(onlineText)){
-                    return "Copied text from " + source.getDescription() + "Successfully saved the text to " + destination.getDescription();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return "Not a valid command";
+        return CoreHelper.exec(this, this.source, this.destination);
     }
 }
