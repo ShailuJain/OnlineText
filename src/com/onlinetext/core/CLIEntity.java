@@ -27,6 +27,7 @@ abstract public class CLIEntity {
 
     public void addAppliedArguments(ArgumentType appliedArgumentType, String argument) {
         this.appliedArguments.put(appliedArgumentType, argument);
+        this.argumentAdded(appliedArgumentType, argument);
     }
 
     protected boolean addAlias(String alias) {
@@ -64,5 +65,11 @@ abstract public class CLIEntity {
         }
         return false;
     }
-    public abstract boolean isValid();
+    public boolean isValid(){
+        if(requiredArgumentTypes != null && appliedArguments != null){
+            return requiredArgumentTypes.size() == appliedArguments.size();
+        }
+        return false;
+    }
+    protected abstract void argumentAdded(ArgumentType argumentType, String argument);
 }

@@ -35,4 +35,9 @@ public class ClipboardTarget implements Target
 	public boolean appendText(String text) {
 		return false;
 	}
+
+	@Override
+	public String getDescription() {
+		return "Clipboard";
+	}
 }

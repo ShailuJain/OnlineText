@@ -62,4 +62,9 @@ public class Shrib implements Target {
     public boolean appendText(String text) {
         return false;
     }
+
+    @Override
+    public String getDescription() {
+        return "shrib.com/" + siteResourceName;
+    }
 }

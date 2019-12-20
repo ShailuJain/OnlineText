@@ -43,19 +43,19 @@ public class Route {
                     List<ArgumentType> requiredArgumentTypes = command.getRequiredArgumentTypes();
                     int requiredArguments = command.getRequiredArgumentTypes().size();
                     while(requiredArguments > 0 && index < args.length){
-                        index++;
                         ArgumentType argumentType = requiredArgumentTypes.get(i++);
                         String arg = args[index];
                         if(arg.matches(argumentType.getArgumentType())){
                             command.addAppliedArguments(argumentType, arg);
                         }else{
-                            return "This command requires argument(s)";
+                            return "This command requires valid argument(s)";
                         }
+                        index++;
                         requiredArguments--;
                     }
                 }
             }
-
+            return command.execute();
         }
         return "Error: Command Not Found";
     }

@@ -10,4 +10,9 @@ public class ClipboardOption extends Option {
         super.addAlias("-c");
         super.addAlias("--clipboard");
     }
+
+    @Override
+    protected void argumentAdded(ArgumentType argumentType, String argument) {
+
+    }
 }

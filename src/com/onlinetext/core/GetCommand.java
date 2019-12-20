@@ -1,6 +1,11 @@
 package com.onlinetext.core;
 
 import com.onlinetext.client.ClipboardTarget;
+import com.onlinetext.client.FileTarget;
+import com.onlinetext.webscraping.Shrib;
+
+import java.io.IOException;
+
 import static com.onlinetext.core.Constants.*;
 
 public class GetCommand extends Command {
@@ -35,16 +40,51 @@ public class GetCommand extends Command {
     public void processOption(Option option) {
         if(option.getOption() == CLIPBOARD){
             setDestination(new ClipboardTarget());
+            this.removeRequiredArgumentType(CoreHelper.FILE_NAME_ARGUMENT_TYPE);
         }
     }
 
     @Override
     public boolean isValid() {
-        return false;
+        boolean flag = super.isValid();
+        for (Option op : getAppliedOptions()) {
+            if(!op.isValid()){
+                return false;
+            }
+        }
+        return flag;
+    }
+
+    @Override
+    protected void argumentAdded(ArgumentType argumentType, String argument) {
+        try {
+            switch (argumentType.getArgumentType()){
+                case STRING:
+                    setSource(new Shrib(argument));
+                    break;
+                case FILE_NAME:
+                    setDestination(new FileTarget(argument));
+                    break;
+                default:
+                    System.out.println("Default argument added");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public String execute() {
-        return null;
+        if(isValid()){
+            try {
+                String onlineText = source.getText();
+                if(destination.putText(onlineText)){
+                    return "Copied text from " + source.getDescription() + "Successfully saved the text to " + destination.getDescription();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return "Not a valid command";
     }
 }

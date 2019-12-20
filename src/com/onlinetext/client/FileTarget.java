@@ -62,4 +62,9 @@ public class FileTarget implements Target {
             return false;
         }
     }
+
+    @Override
+    public String getDescription() {
+        return "File: " + this.filename;
+    }
 }
