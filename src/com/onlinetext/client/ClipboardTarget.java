@@ -1,5 +1,4 @@
-package clipboard;
-import java.awt.HeadlessException;
+package com.onlinetext.client;
 import java.awt.Toolkit;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;

@@ -1,4 +1,4 @@
-package clipboard;
+package com.onlinetext.client;
 import java.io.*;
 
 public class ReadWrite {
