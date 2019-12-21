@@ -7,15 +7,10 @@ import com.onlinetext.core.Option;
 
 import java.util.List;
 
-import static com.onlinetext.core.Constants.GET;
-
 public class Route {
     public static String call(String[] args) {
         int index = 0, i = 0;
         Command command = CoreHelper.getCommand(args[0]);
-        if(command == null){
-            command = CoreHelper.getCommand(GET);
-        }
         if(command != null){
             while(++index < args.length){
                 if(CoreHelper.isOption(args[index])){
