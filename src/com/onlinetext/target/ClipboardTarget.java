@@ -4,6 +4,7 @@ import com.onlinetext.exception.TargetException;
 
 import java.awt.Toolkit;
 import java.awt.datatransfer.*;
+import java.io.File;
 import java.io.PrintStream;
 
 public class ClipboardTarget implements Target
@@ -22,7 +23,7 @@ public class ClipboardTarget implements Target
 	@Override
 	public String getText() throws TargetException {
 		try {
-			System.setErr(new PrintStream("error.log"));
+			System.setErr(new PrintStream(System.getProperty("java.io.tmpdir") + File.separator + "error.log"));
 			Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 			String text = clipboard.getData(DataFlavor.selectBestTextFlavor(clipboard.getAvailableDataFlavors())).toString();
             return text;
