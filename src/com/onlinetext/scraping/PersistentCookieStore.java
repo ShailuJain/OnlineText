@@ -1,5 +1,6 @@
-package com.onlinetext.core;
+package com.onlinetext.scraping;
 
+import com.onlinetext.exception.TargetException;
 import com.onlinetext.target.FileTarget;
 
 import java.io.File;
@@ -14,7 +15,7 @@ public class PersistentCookieStore implements CookieStore, Runnable {
     CookieStore cookieStore;
     File file;
     String filename;
-    public PersistentCookieStore() throws IOException {
+    public PersistentCookieStore() throws IOException, TargetException {
         cookieStore = new CookieManager().getCookieStore();
         String cookie;
 
@@ -80,7 +81,7 @@ public class PersistentCookieStore implements CookieStore, Runnable {
                     }
                 fileTarget.putText(cookiesToWrite);
             }
-        } catch (IOException e) {
+        } catch (TargetException e) {
             e.printStackTrace();
         }
 

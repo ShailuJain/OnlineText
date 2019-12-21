@@ -1,5 +1,7 @@
 package com.onlinetext.core;
 
+import java.util.List;
+
 abstract public class Option extends CLIEntity{
     private int option;
 

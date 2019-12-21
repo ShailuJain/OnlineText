@@ -1,7 +1,8 @@
 package com.onlinetext.target;
 
-import com.onlinetext.core.PersistentCookieStore;
-import com.onlinetext.core.ScrapingHelper;
+import com.onlinetext.exception.TargetException;
+import com.onlinetext.scraping.PersistentCookieStore;
+import com.onlinetext.scraping.ScrapingHelper;
 import org.apache.commons.text.StringEscapeUtils;
 
 import java.io.*;
@@ -11,15 +12,15 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Shrib implements Target {
+public class ShribTarget implements Target {
     private String siteResourceName;
 
-    public Shrib(String siteResourceName) {
+    public ShribTarget(String siteResourceName) {
         this.siteResourceName = siteResourceName;
     }
 
     @Override
-    public String getText() throws IOException {
+    public String getText() throws IOException, TargetException {
         String baseUrlString = "https://alt.shrib.com/", text = "";
         HttpURLConnection httpURLConnection = (HttpURLConnection) ScrapingHelper.getConnection(baseUrlString + this.siteResourceName, "GET");
         String content = ScrapingHelper.getContent(httpURLConnection);
@@ -35,7 +36,7 @@ public class Shrib implements Target {
     }
 
     @Override
-    public boolean putText(String text) throws IOException {
+    public boolean putText(String text) throws IOException, TargetException {
         PersistentCookieStore myPersistentCookieStore = new PersistentCookieStore();
         CookieHandler.setDefault(new CookieManager(myPersistentCookieStore, CookiePolicy.ACCEPT_ORIGINAL_SERVER));
         String baseUrlString = "https://shrib.com/zuex/api.php";
@@ -64,16 +65,10 @@ public class Shrib implements Target {
             wr.flush();
             wr.close();
         } catch (IOException e) {
-            System.out.println(e.getMessage());
-            return false;
+            System.out.println("Something is bugging me in ShribTarget" + e.getMessage());
+            throw new TargetException("Could not put text to " + this.getDescription());
         }
-        System.out.println(httpURLConnection.getResponseMessage());
         return httpURLConnection.getResponseCode() == 200;
-    }
-
-    @Override
-    public boolean appendText(String text) {
-        return false;
     }
 
     @Override

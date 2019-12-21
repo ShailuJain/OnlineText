@@ -1,4 +1,4 @@
-package com.onlinetext.core;
+package com.onlinetext.scraping;
 
 import java.io.BufferedReader;
 import java.io.IOException;

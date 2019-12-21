@@ -1,5 +1,7 @@
 package com.onlinetext.target;
 
+import com.onlinetext.exception.TargetException;
+
 import java.io.*;
 
 public class FileTarget implements Target {
@@ -18,7 +20,7 @@ public class FileTarget implements Target {
 //    }
 
     @Override
-    public String getText() throws IOException {
+    public String getText() throws TargetException {
         String contents = "", temp;
         try {
             File file = new File(filename);
@@ -30,12 +32,13 @@ public class FileTarget implements Target {
             }
             return contents;
         } catch (Exception io) {
-            return io.getMessage();
+            System.out.println("Something is bugging me in FileTarget" + io.getMessage());
+            throw new TargetException("Could not get text from file");
         }
     }
 
     @Override
-    public boolean putText(String text) {
+    public boolean putText(String text) throws TargetException {
         try {
             File file = new File(filename);
             BufferedWriter writer = new BufferedWriter(new FileWriter(file));
@@ -43,12 +46,11 @@ public class FileTarget implements Target {
             writer.close();
             return true;
         } catch (Exception io) {
-            System.out.println(io.getMessage());
-            return false;
+            System.out.println("Something is bugging me in FileTarget" + io.getMessage());
+            throw new TargetException("Could not put text to file");
         }
     }
 
-    @Override
     public boolean appendText(String text) {
         try{
             File file = new File(filename);
@@ -57,7 +59,7 @@ public class FileTarget implements Target {
             writer.close();
             return true;
         } catch(Exception io){
-            System.out.println(io.getMessage());
+            System.out.println("Something is bugging me in FileTarget" + io.getMessage());
             return false;
         }
     }

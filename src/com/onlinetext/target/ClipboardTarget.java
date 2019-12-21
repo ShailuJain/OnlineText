@@ -1,5 +1,7 @@
 package com.onlinetext.target;
 
+import com.onlinetext.exception.TargetException;
+
 import java.awt.Toolkit;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
@@ -9,30 +11,26 @@ import java.io.IOException;
 public class ClipboardTarget implements Target
 {
 	@Override
-	public boolean putText(String text){
+	public boolean putText(String text) throws TargetException {
 		try{
 			Toolkit.getDefaultToolkit().getSystemClipboard()
 					.setContents(new StringSelection(text), null);
 			return true;
 		}catch (Exception e){
-			System.out.println(e.getMessage());
-			return false;
+			System.out.println("Something is bugging me in ClipboardTarget" + e.getMessage());
+            throw new TargetException("Currently only clipboard text is supported!");
 		}
 	}
 	@Override
-	public String getText(){
+	public String getText() throws TargetException {
 		try {
-			return (String)Toolkit.getDefaultToolkit()
-            .getSystemClipboard().getData(DataFlavor.stringFlavor);
-		}
+            return Toolkit.getDefaultToolkit()
+                    .getSystemClipboard().getData(DataFlavor.stringFlavor).toString();
+        }
 		catch (UnsupportedFlavorException | IOException e) {
-			return e.getMessage();
+                System.out.println( "Something is bugging me in ClipboardTarget" + e.getMessage());
+                throw new TargetException("Currently only clipboard text is supported!");
 		}
-	}
-
-	@Override
-	public boolean appendText(String text) {
-		return false;
 	}
 
 	@Override

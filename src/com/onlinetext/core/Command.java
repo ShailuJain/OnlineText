@@ -4,22 +4,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 abstract public class Command extends CLIEntity{
-    private int commandName;
+    private int commandType;
     private List<Option> availableOptions;
     private List<Option> appliedOptions;
 
     protected Command(int commandName) {
-        this.commandName = commandName;
+        this.commandType = commandName;
         this.availableOptions = new ArrayList<>();
         this.appliedOptions = new ArrayList<>();
+
+        this.addAvailableOption(CoreHelper.HELP_OPTION);
     }
 
-    public int getCommandName() {
-        return commandName;
+    public int getCommandType() {
+        return commandType;
     }
 
-    public void setCommandName(int commandName) {
-        this.commandName = commandName;
+    public void setCommandType(int commandType) {
+        this.commandType = commandType;
     }
 
     public List<Option> getAvailableOptions() {
@@ -46,6 +48,22 @@ abstract public class Command extends CLIEntity{
             }
         }
         return null;
+    }
+    public boolean isAppliedOption(Option option){
+        return this.appliedOptions.contains(option);
+    }
+
+    @Override
+    protected String help() {
+        StringBuilder help = new StringBuilder();
+        help.append("Aliases: \n");
+        help.append(super.help() + "\n\n");
+        help.append("Options: \n");
+        List<Option> options = this.getAvailableOptions();
+        for (int i = 0; i < options.size(); i++) {
+            help.append(options.get(i).help());
+        }
+        return help.toString();
     }
 
     public boolean removeAppliedOption(Option option){

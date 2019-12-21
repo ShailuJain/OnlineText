@@ -71,4 +71,15 @@ abstract public class CLIEntity {
         return false;
     }
     protected abstract void argumentAdded(ArgumentType argumentType, String argument);
+    protected String help() {
+        StringBuilder help = new StringBuilder();
+        List<String> aliases = this.getAliases();
+        for (int i = 0; i < aliases.size(); i++) {
+            help.append(aliases.get(i));
+            if(!CoreHelper.isLast(i, aliases.size())){
+                help.append(",");
+            }
+        }
+        return String.format("%-30s", help.toString());
+    }
 }

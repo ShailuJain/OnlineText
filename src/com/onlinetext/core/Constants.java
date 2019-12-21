@@ -22,6 +22,7 @@ public interface Constants {
      *  Option Constants
      */
     public static final int CLIPBOARD = 4;
+    public static final int HELP = 5;
 
     /**
      * Argument Constants
