@@ -1,8 +1,9 @@
 package com.onlinetext.core;
 
+import com.onlinetext.target.Target;
+
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import static com.onlinetext.core.Constants.*;
@@ -55,15 +56,6 @@ public class CoreHelper {
         if(arg == null || "".equals(arg))
             return false;
         return arg.startsWith("-");
-    }
-
-    public static Option getOption(String arg) {
-        for (Option option : AVAILABLE_OPTIONS) {
-            if(option.inAliases(arg)){
-                return option;
-            }
-        }
-        return null;
     }
     static String exec(Command command, Target source, Target destination){
         if(command.isValid()){

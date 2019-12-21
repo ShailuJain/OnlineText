@@ -1,10 +1,9 @@
 package com.onlinetext.core;
 
-import com.onlinetext.client.ClipboardTarget;
-import com.onlinetext.client.FileTarget;
-import com.onlinetext.webscraping.Shrib;
-
-import java.io.IOException;
+import com.onlinetext.target.ClipboardTarget;
+import com.onlinetext.target.FileTarget;
+import com.onlinetext.target.Shrib;
+import com.onlinetext.target.Target;
 
 import static com.onlinetext.core.Constants.*;
 

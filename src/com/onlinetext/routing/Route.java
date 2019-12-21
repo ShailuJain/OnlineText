@@ -14,7 +14,7 @@ public class Route {
         if(command != null){
             while(++index < args.length){
                 if(CoreHelper.isOption(args[index])){
-                    Option op = CoreHelper.getOption(args[index]);
+                    Option op = command.getOption(args[index]);
                     if(op == null){
                         return "Option " + args[index] + " is not a valid option";
                     }

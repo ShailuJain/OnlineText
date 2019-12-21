@@ -1,5 +1,4 @@
-package com.onlinetext.client;
-import com.onlinetext.core.Target;
+package com.onlinetext.target;
 
 import java.awt.Toolkit;
 import java.awt.datatransfer.DataFlavor;

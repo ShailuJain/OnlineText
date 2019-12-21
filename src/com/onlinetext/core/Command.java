@@ -39,6 +39,15 @@ abstract public class Command extends CLIEntity{
         return this.appliedOptions.add(appliedOption);
     }
 
+    public Option getOption(String arg) {
+        for (Option option : this.getAvailableOptions()) {
+            if(option.inAliases(arg)){
+                return option;
+            }
+        }
+        return null;
+    }
+
     public boolean removeAppliedOption(Option option){
         return this.appliedOptions.remove(option);
     }

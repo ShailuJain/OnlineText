@@ -1,6 +1,6 @@
 package com.onlinetext.core;
 
-import com.onlinetext.client.FileTarget;
+import com.onlinetext.target.FileTarget;
 
 import java.io.File;
 import java.io.IOException;

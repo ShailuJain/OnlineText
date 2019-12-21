@@ -1,11 +1,8 @@
 package com.onlinetext;
 
-import com.onlinetext.core.PersistentCookieStore;
 import com.onlinetext.routing.Route;
 
 import java.io.IOException;
-import java.net.*;
-import java.util.List;
 
 public class Main {
 

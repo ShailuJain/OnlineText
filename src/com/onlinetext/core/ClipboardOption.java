@@ -1,7 +1,5 @@
 package com.onlinetext.core;
 
-import java.util.ArrayList;
-
 import static com.onlinetext.core.Constants.CLIPBOARD;
 
 public class ClipboardOption extends Option {

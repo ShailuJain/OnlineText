@@ -1,7 +1,6 @@
-package com.onlinetext.core;
+package com.onlinetext.target;
 
 import java.io.IOException;
-import java.net.ProtocolException;
 
 public interface Target {
     public String getText() throws IOException;

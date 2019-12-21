@@ -1,8 +1,7 @@
-package com.onlinetext.webscraping;
+package com.onlinetext.target;
 
 import com.onlinetext.core.PersistentCookieStore;
 import com.onlinetext.core.ScrapingHelper;
-import com.onlinetext.core.Target;
 import org.apache.commons.text.StringEscapeUtils;
 
 import java.io.*;
@@ -22,7 +21,7 @@ public class Shrib implements Target {
     @Override
     public String getText() throws IOException {
         String baseUrlString = "https://alt.shrib.com/", text = "";
-        HttpURLConnection httpURLConnection = (HttpURLConnection) ScrapingHelper.getConnection(baseUrlString, "GET");
+        HttpURLConnection httpURLConnection = (HttpURLConnection) ScrapingHelper.getConnection(baseUrlString + this.siteResourceName, "GET");
         String content = ScrapingHelper.getContent(httpURLConnection);
 //        Pattern pattern = Pattern.compile("<textarea(.*?)id=\"igob\"(.*?)>(.*?)</textarea>");
         Pattern pattern = Pattern.compile("<textarea(.*?)id=\"igob\"(.*?)>((.*)([\r\n\t].*)+)</textarea>");
