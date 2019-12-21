@@ -21,16 +21,14 @@ public class FileTarget implements Target {
 
     @Override
     public String getText() throws TargetException {
-        String contents = "", temp;
+        StringBuilder contents = new StringBuilder();
+        String temp;
         try {
-            File file = new File(filename);
             BufferedReader reader = new BufferedReader(new FileReader(filename));
-            temp = reader.readLine();
-            while (temp != null) {
-                contents = temp;
-                temp = reader.readLine();
+            while ((temp = reader.readLine()) != null) {
+                contents.append(temp).append("\n");
             }
-            return contents;
+            return contents.toString();
         } catch (Exception io) {
             System.out.println("Something is bugging me in FileTarget" + io.getMessage());
             throw new TargetException("Could not get text from file");

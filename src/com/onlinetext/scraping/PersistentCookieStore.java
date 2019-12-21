@@ -25,9 +25,11 @@ public class PersistentCookieStore implements CookieStore, Runnable {
             cookie = fileTarget.getText();
             String[] cookiesStrings = cookie.split(";");
             for (String cookiesString : cookiesStrings) {
-                String[] keyValue = cookiesString.split("=");
-//                System.out.println(keyValue[0] + keyValue[1]);
-                this.cookieStore.add(null, new HttpCookie(keyValue[0], keyValue[1]));
+                //Checking if the cookie string contains only \n as from getText() we are appending new line by \n
+                if(!cookiesString.matches("[\n]")){
+                    String[] keyValue = cookiesString.split("=");
+                    this.cookieStore.add(null, new HttpCookie(keyValue[0], keyValue[1]));
+                }
             }
         }
 
