@@ -4,7 +4,7 @@ import com.onlinetext.exception.TargetException;
 
 import java.awt.Toolkit;
 import java.awt.datatransfer.*;
-import java.io.IOException;
+import java.io.PrintStream;
 
 public class ClipboardTarget implements Target
 {
@@ -22,10 +22,12 @@ public class ClipboardTarget implements Target
 	@Override
 	public String getText() throws TargetException {
 		try {
+			System.setErr(new PrintStream("error.log"));
 			Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-            return clipboard.getData(DataFlavor.selectBestTextFlavor(clipboard.getAvailableDataFlavors())).toString();
+			String text = clipboard.getData(DataFlavor.selectBestTextFlavor(clipboard.getAvailableDataFlavors())).toString();
+            return text;
         }
-		catch (UnsupportedFlavorException | IOException e) {
+		catch (Exception e) {
                 System.out.println( "Something is bugging me in ClipboardTarget" + e.getMessage());
                 throw new TargetException("Currently only clipboard text is supported!");
 		}
