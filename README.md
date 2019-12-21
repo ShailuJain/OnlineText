@@ -26,3 +26,26 @@ Set the bat file and jar file in environment variable of windows.
  Example:
  
     text read -c <shrib_username>
+### For writing the text to the website
+    text write <shrib_username> <filename>
+Options: -c, --clipboard
+ 
+ These options are used to get the text from your clipboard and then write that on to the website.
+  
+  Example:
+  
+     text write -c <shrib_username>
+### For appending the text to the website
+    text append <shrib_username> <filename>
+Options: -c, --clipboard
+ 
+ These options are used to get the text from your clipboard and then append that on to the website.
+  
+  Example:
+  
+     text append -c <shrib_username>
+     
+### Help options
+Add -h or --help option to any of the command to see how to write the command        
+    
+    
