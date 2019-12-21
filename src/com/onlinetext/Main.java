@@ -1,12 +1,9 @@
 package com.onlinetext;
 
 import com.onlinetext.routing.Route;
-
-import java.io.IOException;
-
 public class Main {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         System.out.println(Route.call(args));
     }
 }
