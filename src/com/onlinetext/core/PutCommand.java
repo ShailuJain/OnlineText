@@ -13,19 +13,19 @@ public class PutCommand extends Command {
     private StringBuilder help;
 
     public PutCommand() {
-        super(PUT);
+        super("write", PUT);
         super.addAlias(PUT_ALIAS_1);
         super.addAlias(PUT_ALIAS_2);
         super.addRequiredArgumentType(CoreHelper.STRING_ARGUMENT_TYPE);
         super.addRequiredArgumentType(CoreHelper.FILE_NAME_ARGUMENT_TYPE);
         super.addAvailableOption(CoreHelper.CLIPBOARD_OPTION);
+        super.setDescription("This command is used to write data to remote site such as shrib.com, etc from local file or clipboard\nusage: text write <remote_uri> <filename>\n\n");
 
         this.buildHelp();
     }
     private void buildHelp() {
         this.help = new StringBuilder();
-        this.help.append("This command is used to write data to remote site such as shrib.com, etc from local file or clipboard\n");
-        this.help.append("usage: text write <remote_uri> <filename>\n\n");
+        this.help.append(this.getDescription());
         this.help.append(super.help());
     }
     public Target getSource() {

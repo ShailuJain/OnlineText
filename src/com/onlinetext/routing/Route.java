@@ -9,6 +9,12 @@ import java.util.List;
 
 public class Route {
     public static String call(String[] args) {
+        if(args.length < 1){
+            return "No command given";
+        }
+        if(args[0].equals("-h") || args[0].equals("--help")){
+            return CoreHelper.help();
+        }
         int index = 0, i = 0;
         Command command = CoreHelper.getCommand(args[0]);
         if(command != null){

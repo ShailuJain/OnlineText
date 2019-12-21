@@ -74,5 +74,14 @@ public class CoreHelper {
             }
         }
         return "You missed the syntax: \n" + command.help();
-    } 
+    }
+
+    public static String help() {
+        StringBuilder help = new StringBuilder();
+        help.append("\nAvailable Commands :\n");
+        for (Command availableCommand : AVAILABLE_COMMANDS) {
+            help.append(availableCommand.getCommandName() + ": " + availableCommand.getDescription());
+        }
+        return help.toString();
+    }
 }

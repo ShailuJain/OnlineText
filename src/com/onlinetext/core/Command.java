@@ -4,12 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 abstract public class Command extends CLIEntity{
+    private String commandName;
+
+    public String getCommandName() {
+        return commandName;
+    }
+
+    public void setCommandName(String commandName) {
+        this.commandName = commandName;
+    }
+
     private int commandType;
     private List<Option> availableOptions;
     private List<Option> appliedOptions;
 
-    protected Command(int commandName) {
-        this.commandType = commandName;
+    protected Command(String commandName, int commandType) {
+        this.commandType = commandType;
+        this.commandName = commandName;
         this.availableOptions = new ArrayList<>();
         this.appliedOptions = new ArrayList<>();
 

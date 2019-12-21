@@ -13,20 +13,20 @@ public class AppendCommand extends Command {
     private StringBuilder help;
 
     public AppendCommand() {
-        super(APPEND);
+        super("append", APPEND);
         super.addAlias(APPEND_ALIAS_1);
         super.addAlias(APPEND_ALIAS_2);
         super.addRequiredArgumentType(CoreHelper.STRING_ARGUMENT_TYPE);
         super.addRequiredArgumentType(CoreHelper.FILE_NAME_ARGUMENT_TYPE);
         super.addAvailableOption(CoreHelper.CLIPBOARD_OPTION);
+        super.setDescription("This command is used to append data to remote site such as shrib.com, etc and paste to local file or clipboard\nusage: text append <remote_uri> <filename>\n\n");
 
         this.buildHelp();
     }
 
     private void buildHelp() {
         this.help = new StringBuilder();
-        this.help.append("This command is used to append data to remote site such as shrib.com, etc and paste to local file or clipboard\n");
-        this.help.append("usage: text append <remote_uri> <filename>\n\n");
+        this.help.append(this.getDescription());
         this.help.append(super.help());
     }
     public Target getSource() {
