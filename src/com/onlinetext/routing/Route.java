@@ -28,7 +28,6 @@ public class Route {
                     List<ArgumentType> requiredArgumentTypes = op.getRequiredArgumentTypes();
                     int requiredArguments = op.getRequiredArgumentTypes().size();
                     while(requiredArguments > 0 && index < args.length){
-                        index++;
                         ArgumentType argumentType = requiredArgumentTypes.get(i++);
                         String arg = args[index];
                         if(arg.matches(argumentType.getArgumentType())){
@@ -36,6 +35,7 @@ public class Route {
                         }else{
                             return "This option requires argument(s)";
                         }
+                        index++;
                         requiredArguments--;
                     }
                     command.addAppliedOption(op);

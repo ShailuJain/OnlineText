@@ -25,7 +25,7 @@ public class ClipboardTarget implements Target
 		try {
 			System.setErr(new PrintStream(System.getProperty("java.io.tmpdir") + File.separator + "error.log"));
 			Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-			String text = clipboard.getData(DataFlavor.selectBestTextFlavor(clipboard.getAvailableDataFlavors())).toString();
+			String text = clipboard.getData(DataFlavor.stringFlavor).toString();
             return text;
         }
 		catch (Exception e) {
